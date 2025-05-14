@@ -11,6 +11,8 @@ dependencies {
   implementation("uk.gov.justice.service.hmpps:hmpps-kotlin-spring-boot-starter:1.4.3")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+  implementation("org.apache.olingo:odata-server-api:5.0.0")
+  implementation("org.apache.olingo:odata-server-core:5.0.0")
 
   testImplementation("uk.gov.justice.service.hmpps:hmpps-kotlin-spring-boot-starter-test:1.4.3")
   testImplementation("org.wiremock:wiremock-standalone:3.13.0")

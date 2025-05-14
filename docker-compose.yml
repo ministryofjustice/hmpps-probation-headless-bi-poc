@@ -1,11 +1,11 @@
 version: "3"
 services:
-  hmpps-template-kotlin:
+  hmpps-probation-headless-bi-poc:
     build:
       context: .
     networks:
       - hmpps
-    container_name: hmpps-template-kotlin
+    container_name: hmpps-probation-headless-bi-poc
     ports:
       - "8080:8080"
     healthcheck:

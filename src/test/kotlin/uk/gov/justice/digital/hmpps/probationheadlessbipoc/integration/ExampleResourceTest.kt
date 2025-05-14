@@ -1,4 +1,4 @@
-package uk.gov.justice.digital.hmpps.templatepackagename.integration
+package uk.gov.justice.digital.hmpps.probationheadlessbipoc.integration
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -14,12 +14,12 @@ class ExampleResourceTest : IntegrationTestBase() {
   inner class TimeEndpoint {
 
     @Test
-    fun `should return unauthorized if no token`() {
+    fun `should return forbidden if no token`() {
       webTestClient.get()
         .uri("/example/time")
         .exchange()
         .expectStatus()
-        .isUnauthorized
+        .isForbidden
     }
 
     @Test
