@@ -2,7 +2,6 @@ package com.hmpp.data.probation.odatademo
 
 import org.apache.olingo.commons.api.data.ContextURL
 import org.apache.olingo.commons.api.data.Entity
-import org.apache.olingo.commons.api.data.EntityCollection
 import org.apache.olingo.commons.api.data.Property
 import org.apache.olingo.commons.api.data.ValueType
 import org.apache.olingo.commons.api.edm.EdmEntityType
