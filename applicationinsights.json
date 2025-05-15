@@ -1,6 +1,6 @@
 {
   "role": {
-    "name": "hmpps-template-kotlin"
+    "name": "hmpps-probation-headless-bi-poc"
   },
   "customDimensions": {
     "service.version": "${BUILD_NUMBER}"

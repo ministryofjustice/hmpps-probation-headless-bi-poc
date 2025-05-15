@@ -1,10 +1,10 @@
 info.app:
-  name: HMPPS Template Kotlin
+  name: HMPPS Probation Headless BI POC
   version: 1.0
 
 spring:
   application:
-    name: hmpps-template-kotlin
+    name: hmpps-probation-headless-bi-poc
   codec:
     max-in-memory-size: 10MB
 
@@ -55,3 +55,6 @@ management:
     info:
       cache:
         time-to-live: 2000ms
+
+hmpps-auth:
+  url: "http://localhost:8090/auth"

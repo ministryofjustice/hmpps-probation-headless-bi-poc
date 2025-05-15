@@ -1,4 +1,4 @@
-package uk.gov.justice.digital.hmpps.templatepackagename.config
+package uk.gov.justice.digital.hmpps.probationheadlessbipoc.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -11,7 +11,6 @@ import java.time.Duration
 class WebClientConfiguration(
   @Value("\${hmpps-auth.url}") val hmppsAuthBaseUri: String,
   @Value("\${api.health-timeout:2s}") val healthTimeout: Duration,
-  @Value("\${api.timeout:20s}") val timeout: Duration,
 ) {
   // HMPPS Auth health ping is required if your service calls HMPPS Auth to get a token to call other services
   @Bean

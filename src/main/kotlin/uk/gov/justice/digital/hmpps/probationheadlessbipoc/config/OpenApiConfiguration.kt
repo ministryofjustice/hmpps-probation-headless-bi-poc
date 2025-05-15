@@ -1,4 +1,4 @@
-package uk.gov.justice.digital.hmpps.templatepackagename.config
+package uk.gov.justice.digital.hmpps.probationheadlessbipoc.config
 
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
@@ -17,9 +17,9 @@ class OpenApiConfiguration(buildProperties: BuildProperties) {
   fun customOpenAPI(): OpenAPI = OpenAPI()
     .servers(
       listOf(
-        Server().url("https://template-kotlin-dev.hmpps.service.justice.gov.uk").description("Development"),
-        Server().url("https://template-kotlin-preprod.hmpps.service.justice.gov.uk").description("Pre-Production"),
-        Server().url("https://template-kotlin.hmpps.service.justice.gov.uk").description("Production"),
+        Server().url("https://probation-headless-bi-poc-dev.hmpps.service.justice.gov.uk").description("Development"),
+        Server().url("https://probation-headless-bi-poc-preprod.hmpps.service.justice.gov.uk").description("Pre-Production"),
+        Server().url("https://probation-headless-bi-poc-.hmpps.service.justice.gov.uk").description("Production"),
         Server().url("http://localhost:8080").description("Local"),
       ),
     )
@@ -27,7 +27,7 @@ class OpenApiConfiguration(buildProperties: BuildProperties) {
       listOf(),
     )
     .info(
-      Info().title("HMPPS Template Kotlin").version(version)
+      Info().title("HMPPS Probation Headless BI POC").version(version)
         .contact(Contact().name("HMPPS Digital Studio").email("feedback@digital.justice.gov.uk")),
     )
   // TODO Add security schema and roles in `.components()` and `.addSecurityItem()`
