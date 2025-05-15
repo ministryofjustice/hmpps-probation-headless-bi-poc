@@ -14,10 +14,6 @@ import org.apache.olingo.server.api.ServiceMetadata
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.web.SecurityFilterChain
-import uk.gov.justice.hmpps.kotlin.auth.HmppsResourceServerConfiguration
-import uk.gov.justice.hmpps.kotlin.auth.dsl.ResourceServerConfigurationCustomizer
 import java.io.IOException
 
 @Configuration
@@ -39,16 +35,5 @@ class ODataServletConfig {
       }
     }
     return ServletRegistrationBean(servlet, "/odata/*")
-  }
-
-  @Bean
-  fun probationSecurityFilterChain(
-    http: HttpSecurity,
-    probationResourceServerCustomizer: ResourceServerConfigurationCustomizer,
-  ): SecurityFilterChain = HmppsResourceServerConfiguration().hmppsSecurityFilterChain(http, probationResourceServerCustomizer)
-
-  @Bean
-  fun probationResourceServerCustomizer() = ResourceServerConfigurationCustomizer {
-    unauthorizedRequestPaths { addPaths = setOf("/**") }
   }
 }
