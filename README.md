@@ -22,7 +22,7 @@ Provides a OData api end point to connect to Power BI client.
 This project uses gradle which is bundled with the repository and also makes use
 of
 
-- [micronaut](https://micronaut.io/) - for compile time dependency injection
+- [Spring Boot](https://spring.io/projects/spring-boot) - for compile time dependency injection
 - [lombok](https://projectlombok.org/) - to reduce boilerplate when creating data classes
 - [jacoco](https://docs.gradle.org/current/userguide/jacoco_plugin.html) - for test coverage reports
 
@@ -66,12 +66,14 @@ project.
 
 ## Running the application locally
 
-The application comes with a `dev` spring profile that includes default settings for running locally. This is not
+The application comes with a default spring profile that includes default settings for running locally. This is not
 necessary when deploying to kubernetes as these values are included in the helm configuration templates -
-e.g. `values-dev.yaml`.
+e.g. `application.yml`.
 
 There is also a `docker-compose.yml` that can be used to run a local instance of the template in docker and also an
 instance of HMPPS Auth (required if your service calls out to other services using a token).
+
+HMPPS Auth is disabled for the POC for now. In future we will add it. 
 
 ```bash
 docker compose pull && docker compose up
