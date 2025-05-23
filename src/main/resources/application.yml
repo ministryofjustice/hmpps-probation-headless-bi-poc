@@ -2,6 +2,19 @@ info.app:
   name: HMPPS Probation Headless BI POC
   version: 1.0
 
+#customdatasource:
+#  redshift:
+#    url: ${REDSHIFT_JDBC_URL}
+#    username: ${REDSHIFT_JDBC_USER}
+#    password: ${REDSHIFT_JDBC_PASSWORD}
+#    driver: com.amazon.redshift.jdbc.Driver
+
+datasource:
+  url: jdbc:h2:mem:datamart;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS domain\;
+  username: sa
+  password: sa
+  driver-class-name: org.h2.Driver
+
 spring:
   application:
     name: hmpps-probation-headless-bi-poc
@@ -12,6 +25,7 @@ spring:
     date-format: "yyyy-MM-dd HH:mm:ss"
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
+
 
   security:
     oauth2:
@@ -58,3 +72,23 @@ management:
 
 hmpps-auth:
   url: "http://localhost:8090/auth"
+
+dpr:
+  lib:
+    definition:
+      locations: test
+#    caseloads:
+#      host: ${ME_CASELOADS_API_HOST}
+#    user:
+#      role: ${AUTHORISED_ROLES}
+#    dataProductDefinitions:
+#      host: ${DEFINITIONS_HOST:}
+#      cache:
+#        enabled: true
+#        durationMinutes: 10
+#    redshiftdataapi:
+#      secretarn: ${REDSHIFT_DATA_SECRETARN}
+#      clusterid: ${REDSHIFT_DATA_CLUSTER_ID}
+#      database: ${REDSHIFT_DATA_DB}
+#      s3location: ${REDSHIFT_DATA_S3_LOCATION}
+#      athenaworkgroup: dpr-generic-athena-workgroup

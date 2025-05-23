@@ -28,6 +28,15 @@ generic-service:
   namespace_secrets:
     hmpps-probation-headless-bi-poc-application-insights:
       APPLICATIONINSIGHTS_CONNECTION_STRING: "APPLICATIONINSIGHTS_CONNECTION_STRING"
+    redshift-jdbc:
+      REDSHIFT_JDBC_USER: "user"
+      REDSHIFT_JDBC_PASSWORD: "password"
+      REDSHIFT_JDBC_URL: "url"
+    hmpps-auth:
+      SYSTEM_CLIENT_ID: "system_client_id"
+      SYSTEM_CLIENT_SECRET: "system_client_secret"
+    redshift-data:
+      REDSHIFT_DATA_SECRETARN: "secretarn"
 
   allowlist:
     groups:
