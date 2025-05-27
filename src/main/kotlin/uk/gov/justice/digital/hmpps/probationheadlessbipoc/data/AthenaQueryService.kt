@@ -35,8 +35,7 @@ class AthenaQueryService(private val athenaClient: AthenaClient) {
       .workGroup("dpr-generic-athena-workgroup")
       .build()
     val response = athenaClient.startQueryExecution(request)
-    val statementStatus = getStatementStatus(response.queryExecutionId())
-    return statementStatus.status
+    return response.queryExecutionId()
   }
 
   fun getStatementStatus(statementId: String): StatementExecutionStatus {
