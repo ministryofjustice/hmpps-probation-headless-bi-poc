@@ -2,26 +2,29 @@ package com.hmpp.data.probation.odatademo
 
 import org.apache.olingo.commons.api.data.ContextURL
 import org.apache.olingo.commons.api.data.Entity
-import org.apache.olingo.commons.api.data.EntityCollection
 import org.apache.olingo.commons.api.data.Property
 import org.apache.olingo.commons.api.data.ValueType
 import org.apache.olingo.commons.api.edm.EdmEntityType
 import org.apache.olingo.commons.api.format.ContentType
 import org.apache.olingo.commons.api.http.HttpHeader
 import org.apache.olingo.server.api.OData
-import org.apache.olingo.server.api.ODataApplicationException
 import org.apache.olingo.server.api.ODataRequest
 import org.apache.olingo.server.api.ODataResponse
 import org.apache.olingo.server.api.ServiceMetadata
-import org.apache.olingo.server.api.processor.EntityCollectionProcessor
-import org.apache.olingo.server.api.serializer.EntityCollectionSerializerOptions
+import org.apache.olingo.server.api.processor.EntityProcessor
+import org.apache.olingo.server.api.serializer.EntitySerializerOptions
 import org.apache.olingo.server.api.uri.UriInfo
 import org.apache.olingo.server.api.uri.UriResourceEntitySet
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import java.net.URI
 import java.util.*
 
-class BookEntityCollectionProcessor : EntityCollectionProcessor {
+@Component
+class ReportsEntityProcessor(
+  private val entityName: String,
+  private val data: List<Map<String, Any?>>,
+) : EntityProcessor {
 
   companion object {
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -35,48 +38,53 @@ class BookEntityCollectionProcessor : EntityCollectionProcessor {
     this.serviceMetadata = serviceMetadata
   }
 
-  override fun readEntityCollection(
+  override fun readEntity(
     request: ODataRequest,
     response: ODataResponse,
     uriInfo: UriInfo,
     responseFormat: ContentType,
   ) {
-    val resourceParts = uriInfo.uriResourceParts
-    if (resourceParts.isEmpty() || resourceParts[0] !is UriResourceEntitySet) {
-      throw ODataApplicationException("Invalid URI format", 400, Locale.ENGLISH)
-    }
+    log.info("Single Probation Report entity")
     val resource = uriInfo.uriResourceParts[0] as UriResourceEntitySet
     val entitySet = resource.entitySet
+    val keyPredicate = resource.keyPredicates[0]
+    val id = keyPredicate.text.replace("'", "").toString()
 
-    val books = listOf(
-      Book(1, "Kotlin in Action", "Dmitry"),
-      Book(2, "Effective Java", "Joshua"),
-    )
+    log.info("Reports keyPredicate: {}", id)
 
-    val entityCollection = EntityCollection()
-
-    books.forEach {
-      val entity = Entity()
-      entity.addProperty(Property(null, "id", ValueType.PRIMITIVE, it.id))
-      entity.addProperty(Property(null, "title", ValueType.PRIMITIVE, it.title))
-      entity.addProperty(Property(null, "author", ValueType.PRIMITIVE, it.author))
-      entity.id = URI("Books(${it.id})")
-      entityCollection.entities.add(entity)
+    val entity = Entity()
+    val stringAnyMap = data.filter { entry -> entry.get("offender_id") == id }.get(0)
+    for ((key, value) in stringAnyMap) {
+      println(" $key: $value")
+      entity.addProperty(Property(null, key, ValueType.PRIMITIVE, value))
     }
+    entity.id = URI("Reports(${stringAnyMap["offender_id"]})")
 
     val serializer = odata.createSerializer(responseFormat)
     val edmEntityType: EdmEntityType = entitySet.entityType
     val contextUrl = ContextURL.with().entitySet(entitySet).build()
-    val options = EntityCollectionSerializerOptions.with().contextURL(contextUrl).build()
-    val serializedContent = serializer.entityCollection(
+    val options = EntitySerializerOptions.with().contextURL(contextUrl).build()
+
+    val result = serializer.entity(
       serviceMetadata,
       edmEntityType,
-      entityCollection,
+      entity,
       options,
     )
-
-    response.content = serializedContent.content
-    response.statusCode = 200
+    response.content = result.content
+    response.statusCode = response.statusCode
     response.setHeader(HttpHeader.CONTENT_TYPE, responseFormat.toContentTypeString())
+  }
+
+  override fun createEntity(p0: ODataRequest?, p1: ODataResponse?, p2: UriInfo?, p3: ContentType?, p4: ContentType?) {
+    TODO("Not yet implemented")
+  }
+
+  override fun updateEntity(p0: ODataRequest?, p1: ODataResponse?, p2: UriInfo?, p3: ContentType?, p4: ContentType?) {
+    TODO("Not yet implemented")
+  }
+
+  override fun deleteEntity(p0: ODataRequest?, p1: ODataResponse?, p2: UriInfo?) {
+    TODO("Not yet implemented")
   }
 }

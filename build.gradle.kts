@@ -18,13 +18,11 @@ dependencies {
   implementation("org.apache.olingo:odata-server-api:5.0.0")
   implementation("org.apache.olingo:odata-server-core:5.0.0")
   implementation("com.amazon.redshift:redshift-jdbc4-no-awssdk:1.2.45.1069")
-
-  implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-//  implementation("uk.gov.justice.service.hmpps:hmpps-digital-prison-reporting-lib:7.10.3")
+  implementation("com.amazonaws:aws-java-sdk-secretsmanager:1.12.590")
+  implementation("io.awspring.cloud:spring-cloud-starter-aws-secrets-manager-config:2.4.4")
+  implementation("org.springframework.boot:spring-boot-starter-jdbc")
   implementation("software.amazon.awssdk:athena:$awsSdkVersion")
-
-  implementation("com.h2database:h2")
+//  implementation("uk.gov.justice.service.hmpps:hmpps-digital-prison-reporting-lib:7.10.3")
 
   testImplementation("uk.gov.justice.service.hmpps:hmpps-kotlin-spring-boot-starter-test:1.4.3")
   testImplementation("org.wiremock:wiremock-standalone:3.13.0")

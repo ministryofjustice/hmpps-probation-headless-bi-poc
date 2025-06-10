@@ -1,6 +1,7 @@
 package uk.gov.justice.digital.hmpps.probationheadlessbipoc.data
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.services.athena.AthenaClient
 import software.amazon.awssdk.services.athena.model.AthenaError
@@ -21,7 +22,8 @@ const val QUERY_SUBMITTED = "SUBMITTED"
 
 @Service
 @ConditionalOnBean(AthenaClient::class)
-class AthenaQueryService(private val athenaClient: AthenaClient) {
+@ConditionalOnProperty(name = ["spring.config.import"])
+class AthenaQueryService(private val athenaClient: AthenaClient, private val athenaAndRedshiftCommonRepository: AthenaAndRedshiftCommonRepository) {
 
   fun startQueryExecution(query: String, database: String, catalog: String): String {
     val request = StartQueryExecutionRequest.builder()
@@ -56,6 +58,11 @@ class AthenaQueryService(private val athenaClient: AthenaClient) {
       errorCategory = error?.errorCategory(),
       stateChangeReason = stateChangeReason,
     )
+  }
+
+  fun getQueryResults(tableId: String?): List<Map<String, Any?>> {
+    val tableName = tableId ?: "_2e5dddcc_c1ff_4f3b_b73d_ad2fd3dac500"
+    return athenaAndRedshiftCommonRepository.getExternalTableResult(tableName)
   }
 
   protected fun mapAthenaStateToRedshiftState(queryState: String): String {

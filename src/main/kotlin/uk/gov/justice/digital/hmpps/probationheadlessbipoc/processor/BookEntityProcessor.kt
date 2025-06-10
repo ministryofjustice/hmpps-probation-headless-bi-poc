@@ -48,8 +48,8 @@ class BookEntityProcessor : EntityProcessor {
     log.info("keyPredicate: {}", key)
 
     val book = listOf(
-      BookDto(1, "Kotlin in Action", "Dmitry"),
-      BookDto(2, "Effective Java", "Joshua"),
+      Book(1, "Kotlin in Action", "Dmitry"),
+      Book(2, "Effective Java", "Joshua"),
     ).find { it.id == key } ?: throw ODataApplicationException(
       "Book not found",
       404,

@@ -18,10 +18,15 @@ import org.apache.olingo.server.api.serializer.EntityCollectionSerializerOptions
 import org.apache.olingo.server.api.uri.UriInfo
 import org.apache.olingo.server.api.uri.UriResourceEntitySet
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 import java.net.URI
 import java.util.*
 
-class BookEntityCollectionProcessor : EntityCollectionProcessor {
+@Component
+class ReportsEntityCollectionProcessor(
+  private val entityName: String,
+  private val data: List<Map<String, Any?>>,
+) : EntityCollectionProcessor {
 
   companion object {
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -41,6 +46,7 @@ class BookEntityCollectionProcessor : EntityCollectionProcessor {
     uriInfo: UriInfo,
     responseFormat: ContentType,
   ) {
+    log.info("entityName: {}", entityName)
     val resourceParts = uriInfo.uriResourceParts
     if (resourceParts.isEmpty() || resourceParts[0] !is UriResourceEntitySet) {
       throw ODataApplicationException("Invalid URI format", 400, Locale.ENGLISH)
@@ -48,19 +54,15 @@ class BookEntityCollectionProcessor : EntityCollectionProcessor {
     val resource = uriInfo.uriResourceParts[0] as UriResourceEntitySet
     val entitySet = resource.entitySet
 
-    val books = listOf(
-      Book(1, "Kotlin in Action", "Dmitry"),
-      Book(2, "Effective Java", "Joshua"),
-    )
-
     val entityCollection = EntityCollection()
-
-    books.forEach {
+    for (entry in data) {
+      println("User:")
       val entity = Entity()
-      entity.addProperty(Property(null, "id", ValueType.PRIMITIVE, it.id))
-      entity.addProperty(Property(null, "title", ValueType.PRIMITIVE, it.title))
-      entity.addProperty(Property(null, "author", ValueType.PRIMITIVE, it.author))
-      entity.id = URI("Books(${it.id})")
+      for ((key, value) in entry) {
+        println(" $key: $value")
+        entity.addProperty(Property(null, key, ValueType.PRIMITIVE, value))
+      }
+      entity.id = URI("Reports(${entry["offender_id"]})")
       entityCollection.entities.add(entity)
     }
 

@@ -29,6 +29,7 @@ class DemoEdmProvider : CsdlAbstractEdmProvider() {
       return CsdlEntityType().setName(ENTITYT_TYPE_NAME)
         .setProperties(listOf(id, title, author))
         .setKey(listOf(CsdlPropertyRef().setName("id")))
+        .setOpenType(true)
     }
     return null
   }
@@ -40,11 +41,11 @@ class DemoEdmProvider : CsdlAbstractEdmProvider() {
   }
 
   override fun getEntityContainer(): CsdlEntityContainer = CsdlEntityContainer().setName("Container")
-    .setEntitySets(listOf(getEntitySet(FullQualifiedName("", ""), ENTITYT_SET_NAME)))
+    .setEntitySets(listOf(getEntitySet(FullQualifiedName(ENTITYT_SET_NAME, "Container"), ENTITYT_SET_NAME)))
 
   override fun getSchemas(): List<CsdlSchema> = listOf(
     CsdlSchema()
-      .setNamespace(NAMESPACE)
+      .setNamespace(ENTITYT_SET_NAME)
       .setEntityTypes(listOf(getEntityType(FQN)))
       .setEntityContainer(entityContainer),
   )
