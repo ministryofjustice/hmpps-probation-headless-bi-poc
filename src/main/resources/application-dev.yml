@@ -7,6 +7,9 @@ spring:
     name: hmpps-probation-headless-bi-poc
   codec:
     max-in-memory-size: 10MB
+  config:
+    import: "aws-secretsmanager:arn:aws:secretsmanager:eu-west-2:771283872747:secret:dpr-redshift-secret-development-rLHcQZ"
+
 
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
