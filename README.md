@@ -11,11 +11,25 @@ Requires Java 17 or above
 #### CODEOWNER
 
 Team : hmpps-digital-prison-reporting
+
 Email : digitalprisonreporting@digital.justice.gov.uk
 
 ## Overview
 
-Provides a OData api end point to connect to Power BI client.
+The headless BI application provides a OData api endpoint that allows external systems such as Power BI in this case to retrieve reports data programmatically.
+This endpoint serves as a OData API interface, enabling Power BI client to access data products as reports in a structured and standardized format using OData protocal. 
+The main function of this endpoint is to expose BI reports in response to HTTP requests. The application processes theses OData queries, fetches the appropriate report data 
+from the backend, and returns the results in a machine-readable format, typically JSON.
+
+For the purpose of a Proof of Concept (POC), 
+- Authentication has been intentionally disabled on this endpoint. This was done to simplify testing and accelerating development by allowing developers to access the reports to 
+test the endpoint in Power BI client. However , it is important to note that this configuration is only suitable for internal environments. Authentication should be re-enabled before deploying the application to any production.
+
+- Reporting lib has not been integrated. at the moment the data product dataset can be accessed through redshift repository from EC2 instance arns access.   
+            
+## Architecture
+
+Please follow the link for the architectural design and deployment setup: https://dsdmoj.atlassian.net/wiki/spaces/DPR/pages/5751472208/Headless+BI+Probation+PoC
 
 ## Local Development
 
